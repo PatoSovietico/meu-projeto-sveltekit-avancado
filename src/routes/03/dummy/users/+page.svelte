@@ -1,0 +1,13 @@
+<script>
+    let { data } = $props();
+  </script>
+  
+  <h3>Usuários</h3>
+  <ul>
+    {#each data.users.users as user}
+      <li><a href="/03/external/users/{user.id}">{user.name}
+            {user.firstName} {user.lastName} ({user.age} anos).
+        </a>
+    </li>
+    {/each}
+  </ul>
