@@ -17,7 +17,7 @@
           <a class="nav-link active" href="/01/b">Cap 01</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="src/routes/03/pokemon">Cap 02</a>
+          <a class="nav-link active" href="/03/pokemon">Cap 02</a>
         </li>
       </ul>
     </div>
