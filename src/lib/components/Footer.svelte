@@ -1,5 +1,5 @@
 <footer class="d-flex justify-content-between align-items-center py-1 mt-auto border-top">
-  <p class="mb-0 text-body-secondary">&copy; 2024 Company, Inc</p>
+  <p class="mb-0 text-body-secondary">&copy; 2025 Company, Inc</p>
 
   <a href="/"> <img src="/being-silly-hey.gif" alt="logo" style="height: 2em" /> </a>
 
