@@ -12,9 +12,12 @@ export const actions = {
     default: async ({request}) =>{
         const data = await request.formData();
         const dados = {
-            nome: data.get('nome'), email: data.get('email'),
-            nascimento:data.get('nascimento'), senha: data.get('senha'),
-            confirmacaosenha: data.get('confirmacaosenha'), erros: []
+            nome: data.get('nome'), 
+            email: data.get('email'),
+            nascimento:data.get('nascimento'), 
+            senha: data.get('senha'),
+            confirmacaosenha: data.get('confirmacaosenha'), 
+            erros: []
         }
 
         if (!dados.nome || !dados.email || !dados.nascimento || !dados.senha || !dados.confirmacaosenha) dados.erros.push('Preencha todos os campos');
@@ -30,7 +33,7 @@ export const actions = {
         )
             dados.erros.push('A senha deve ter pelo menows uma letra maiúscula, uma minúscula, um número e um caractere especial');
 
-        let agora = new Date(), nasc = new Date(dados.nascimento);
+        let agora = new Date(), nascimento = new Date(dados.nascimento);
         if (agora - nascimento < 368691200000)
             dados.erros.push('Você ainda não completou 12 anos!');
         if (dados.erros.length > 0) return fail (400, dados);
