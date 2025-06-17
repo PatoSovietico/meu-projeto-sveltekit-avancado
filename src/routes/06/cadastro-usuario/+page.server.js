@@ -37,6 +37,8 @@ export const actions = {
         if (agora - nascimento < 368691200000)
             dados.erros.push('Você ainda não completou 12 anos!');
         if (dados.erros.length > 0) return fail (400, dados);
+
+        if (dados.nome.length < 2) dados.erros.push('Esse nome tem menos de 2 caracteres');
         
 
         redirect(303, '/06/profile')
