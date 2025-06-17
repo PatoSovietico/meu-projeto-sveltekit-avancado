@@ -34,8 +34,7 @@ export const actions = {
             dados.erros.push('A senha deve ter pelo menows uma letra maiúscula, uma minúscula, um número e um caractere especial');
 
         let agora = new Date(), nascimento = new Date(dados.nascimento);
-        if (agora - nascimento < 368691200000)
-            dados.erros.push('Você ainda não completou 12 anos!');
+        if (agora - nascimento < 368691200000) dados.erros.push('Você ainda não completou 12 anos!');
         if (dados.erros.length > 0) return fail (400, dados);
 
         if (dados.nome.length <= 2) dados.erros.push('Esse nome tem 2 caracteres ou menos');
