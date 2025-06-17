@@ -4,7 +4,7 @@ import {fail, redirect} from '@sveltejs/kit';
 
 function contem(texto, caracteres){
     for (const caractere of caracteres)
-        if (texto.includers(caractere)) return true;
+        if (texto.includes(caractere)) return true;
         return false;
 }
 
@@ -34,6 +34,7 @@ export const actions = {
         if (agora - nascimento < 368691200000)
             dados.erros.push('Você ainda não completou 12 anos!');
         if (dados.erros.length > 0) return fail (400, dados);
+        
 
         redirect(303, '/06/profile')
     }
