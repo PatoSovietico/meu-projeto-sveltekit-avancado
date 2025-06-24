@@ -8,10 +8,11 @@
     <input name="umnumero" type="number" placeholder="Digite um número" /><br />
     <input name="umtexto" type="text" placeholder="Digite um texto" /><br />
     <input name="umadata" type="date" /><br />
+    
     <div class="buttons">
-        <button formaction="/06/ifms/a">Enviar para A</button>
-        <button formaction="/06/ifms/b">Enviar para B</button>
-        <button formaction="/06/ifms/c">Enviar para C</button>
+        <button formaction="/06/ifms/a?redirect">Enviar para A</button>
+        <button formaction="/06/ifms/b?redirect">Enviar para B</button>
+        <button formaction="/06/ifms/c?redirect">Enviar para C</button>
     </div>
 </form>
 
