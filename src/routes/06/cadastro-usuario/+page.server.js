@@ -1,52 +1,73 @@
-import {fail, redirect} from '@sveltejs/kit';
-
-function contem(texto, caracteres){
-    for (const caractere of caracteres)
-        if (texto.includes(caractere)) return true;
-    return false;
-}
+import { fail } from '@sveltejs/kit';
 
 export const actions = {
-    default: async ({request}) => {
-        const data = await request.formData();
+    default: async ({ request }) => {
+        const formData = await request.formData();
         const dados = {
-            nome: data.get('nome'), 
-            email: data.get('email'),
-            nascimento: data.get('nascimento'), 
-            senha: data.get('senha'),
-            confirmacaosenha: data.get('confirmacaosenha'), 
-            erros: []
+            nome: formData.get('nome')?.trim() || '',
+            email: formData.get('email')?.trim() || '',
+            senha: formData.get('senha') || '',
+            confirmacaoSenha: formData.get('confirmacaoSenha') || '',
+            nascimento: formData.get('nascimento') || '',
+            erros: {}
+        };
+
+        // Validação do nome
+        if (!dados.nome) {
+            dados.erros.nome = 'Nome é obrigatório';
+        } else if (dados.nome.length < 2) {
+            dados.erros.nome = 'Nome deve ter pelo menos 2 caracteres';
         }
 
-        if (!dados.nome || !dados.email || !dados.nascimento || !dados.senha || !dados.confirmacaosenha) 
-            dados.erros.push('Preencha todos os campos');
+        // Validação do email
+        const emailRegex = /^[a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/;
+        if (!dados.email) {
+            dados.erros.email = 'Email é obrigatório';
+        } else if (!emailRegex.test(dados.email)) {
+            dados.erros.email = 'Email inválido (exemplo: usuario@dominio.com)';
+        }
 
-        if(!dados.email.includes('@')) 
-            dados.erros.push('Email inválido');
+        // Validação da senha
+        const senhaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{4,}$/;
+        if (!dados.senha) {
+            dados.erros.senha = 'Senha é obrigatória';
+        } else if (!senhaRegex.test(dados.senha)) {
+            dados.erros.senha = 'Senha deve ter: 4+ caracteres, 1 maiúscula, 1 minúscula, 1 número e 1 especial';
+        }
 
-        if (dados.senha !== dados.confirmacaosenha) 
-            dados.erros.push('Senhas não conferem');
+        // Validação da confirmação de senha
+        if (!dados.confirmacaoSenha) {
+            dados.erros.confirmacaoSenha = 'Confirmação de senha é obrigatória';
+        } else if (dados.senha !== dados.confirmacaoSenha) {
+            dados.erros.confirmacaoSenha = 'Senhas não coincidem';
+        }
 
-        // Verificação mais robusta da senha
-        const temMinuscula = /[a-z]/.test(dados.senha);
-        const temMaiuscula = /[A-Z]/.test(dados.senha);
-        const temNumero = /[0-9]/.test(dados.senha);
-        const temEspecial = /[!@#$%¨&*()\-_=+]/.test(dados.senha);
-        
-        if (!temMinuscula || !temMaiuscula || !temNumero || !temEspecial)
-            dados.erros.push('A senha deve ter pelo menos uma letra maiúscula, uma minúscula, um número e um caractere especial');
+        // Validação da data de nascimento
+        if (!dados.nascimento) {
+            dados.erros.nascimento = 'Data de nascimento é obrigatória';
+        } else {
+            const nascimento = new Date(dados.nascimento);
+            const hoje = new Date();
+            const idadeMinima = new Date(nascimento);
+            idadeMinima.setFullYear(nascimento.getFullYear() + 12);
+            
+            if (idadeMinima > hoje) {
+                dados.erros.nascimento = 'Você deve ter pelo menos 12 anos';
+            }
+        }
 
-        let agora = new Date(), nascimento = new Date(dados.nascimento);
-        if (agora - nascimento < 368691200000) 
-            dados.erros.push('Você ainda não completou 12 anos!');
-        
-        // Verificação do nome com 2 caracteres ou menos
-        if (dados.nome && dados.nome.length <= 2) 
-            dados.erros.push('Nome deve ter mais de 2 caracteres');
+        // Se houver erros, retorna com fail
+        if (Object.keys(dados.erros).length > 0) {
+            return fail(400, {
+                ...dados,
+                message: 'Corrija os erros abaixo'
+            });
+        }
 
-        if (dados.erros.length > 0) 
-            return fail(400, dados);
-
-        redirect(303, '/06/profile');
+        // Se tudo válido, retorna sucesso
+        return {
+            success: true,
+            nome: dados.nome
+        };
     }
 };
