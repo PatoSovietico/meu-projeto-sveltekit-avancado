@@ -31,7 +31,7 @@ export const actions = {
             || !contem(dados.senha, "0123456789")
             || !contem(dados.senha, "!@#$%¨&*()-_=+")
         )
-            dados.erros.push('A senha deve ter pelo menows uma letra maiúscula, uma minúscula, um número e um caractere especial');
+            dados.erros.push('A senha deve ter pelo menos uma letra maiúscula, uma minúscula, um número e um caractere especial');
 
         let agora = new Date(), nascimento = new Date(dados.nascimento);
         if (agora - nascimento < 368691200000) dados.erros.push('Você ainda não completou 12 anos!');
