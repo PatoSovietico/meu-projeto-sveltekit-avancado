@@ -1,11 +1,13 @@
-<form method="POST" action="/06/ifms/a">
-    <input name="umnumero" type="number" placeholder="Digite um número" /><br />
-    <input name="umtexto" type="text" placeholder="Digite um número" /><br />
-    <input name="umadata" type="date" /><br />
-    <button>Enviar 1</button>
-    <button formaction="06/ifms/b">Enviar 2</button>
-    <button formaction="06/ifms/c">Enviar 3</button>
+<script>
+    export let data;
+</script>
 
-</form>
+<h1>Resultado - Número</h1>
 
-<a href="/06/ifms/a">Voltar</a>
+{#if data?.result}
+    <p>Número digitado: {data.result}</p>
+{:else if data?.error}
+    <p>{data.error}</p>
+{/if}
+
+<a href="/06/ifms">Voltar para Central</a>
