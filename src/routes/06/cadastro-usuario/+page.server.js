@@ -20,7 +20,7 @@ export const actions = {
         }
 
         // Validação do email
-        const emailRegex = /^[a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/;
+        const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/;
         if (!dados.email) {
             dados.erros.email = 'Email é obrigatório';
         } else if (!emailRegex.test(dados.email)) {
