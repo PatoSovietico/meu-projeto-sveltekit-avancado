@@ -1,9 +1,9 @@
 <script>
     export let form;
-    export let data;
+
     
-    $: success = data?.success;
-    $: nome = data?.nome;
+    $: success =form?.success;
+    $: nome = form?.nome;
 </script>
 
 <div class="container">

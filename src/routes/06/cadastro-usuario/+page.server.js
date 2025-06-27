@@ -28,7 +28,7 @@ export const actions = {
         }
 
         // Validação da senha
-        const senhaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{4,}$/;
+        const senhaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])(?=.*[0-9]).{4,}$/;
         if (!dados.senha) {
             dados.erros.senha = 'Senha é obrigatória';
         } else if (!senhaRegex.test(dados.senha)) {
